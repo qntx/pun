@@ -17,7 +17,7 @@ update:
     cargo update
 
 run:
-    cargo run -p gap --release --all-features --
+    cargo run -p pun --release --all-features --
 
 test:
     cargo test --workspace --all-features

@@ -13,6 +13,6 @@ jobs:
     permissions:
       contents: read
     with:
-      packages: "gap"
+      packages: "pun"
     secrets:
       CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}

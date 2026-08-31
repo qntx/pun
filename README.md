@@ -1,4 +1,4 @@
-# Gap
+# pun
 
 [![Crates.io][crates-badge]][crates-url]
 [![Docs.rs][docs-badge]][docs-url]
@@ -6,12 +6,12 @@
 [![License][license-badge]][license-url]
 [![Rust][rust-badge]][rust-url]
 
-[crates-badge]: https://img.shields.io/crates/v/gap.svg
-[crates-url]: https://crates.io/crates/gap
-[docs-badge]: https://img.shields.io/docsrs/gap.svg
-[docs-url]: https://docs.rs/gap
-[ci-badge]: https://github.com/qntx/gap/actions/workflows/ci.yml/badge.svg
-[ci-url]: https://github.com/qntx/gap/actions/workflows/ci.yml
+[crates-badge]: https://img.shields.io/crates/v/pun.svg
+[crates-url]: https://crates.io/crates/pun
+[docs-badge]: https://img.shields.io/docsrs/pun.svg
+[docs-url]: https://docs.rs/pun
+[ci-badge]: https://github.com/qntx/pun/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/qntx/pun/actions/workflows/ci.yml
 [license-badge]: https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg
 [license-url]: LICENSE-MIT
 [rust-badge]: https://img.shields.io/badge/rust-edition%202024-orange.svg
@@ -19,50 +19,48 @@
 
 **P2P pipe in Rust — punch NAT, send a path, receive by ticket. blake3-verified streaming.**
 
-`gap send` stands up an ephemeral iroh endpoint, imports a file or directory into a blob store, and prints a ticket. `gap receive` fetches that payload into the current directory. While the sender is running, the ticket is the capability: anyone who has it can fetch the blobs.
+`pun send` stands up an ephemeral iroh endpoint, imports a file or directory into a blob store, and prints a ticket. `pun receive` fetches that payload into the current directory. While the sender is running, the ticket is the capability: anyone who has it can fetch the blobs.
 
 ## Install
 
 **macOS / Linux**
 
 ```sh
-curl -fsSL https://sh.qntx.org/gap | sh
+curl -fsSL https://sh.qntx.org/pun | sh
 ```
 
 **Windows** (PowerShell)
 
 ```powershell
-irm https://sh.qntx.org/gap/ps | iex
+irm https://sh.qntx.org/pun/ps | iex
 ```
 
-Or with Cargo — `cargo install gap`.
-
-oh-my-zsh’s git plugin aliases `gap` to `git apply`. Then a bare `gap` waits on stdin, and `gap send FILE` becomes `git apply send FILE`. Use `command gap` or `\gap`, or `unalias gap`.
+Or with Cargo — `cargo install pun`.
 
 ## Usage
 
 ```sh
-command gap send ./photo.jpg
-command gap recv <ticket>
+pun send ./photo.jpg
+pun recv <ticket>
 ```
 
-`recv` is an alias for `receive`. Clipboard copies `gap receive {ticket}`.
+`recv` is an alias for `receive`. Clipboard copies `pun receive {ticket}`.
 
 ```sh
-gap send . --no-progress          # three-line stdout, no TTY chatter
-gap send ./dir -c                 # copy the receive command (OSC 52)
-gap send ./dir --relay disabled   # loopback / airgap
+pun send . --no-progress          # three-line stdout, no TTY chatter
+pun send ./dir -c                 # copy the receive command (OSC 52)
+pun send ./dir --relay disabled   # loopback / airgap
 ```
 
 | | |
 | --- | --- |
-| `GAP_SECRET` | Optional hex node key. Random if unset. `--show-secret` prints it to stderr. |
+| `PUN_SECRET` | Optional hex node key. Random if unset. `--show-secret` prints it to stderr. |
 | `RUST_LOG` | Tracing. `-v` / `-vv` are stats, not log levels. |
 | `--relay` | `default` (n0), `disabled`, or a URL. |
 | `--no-progress` | Hide bars. Non-TTY send prints exactly three ASCII lines. |
-| `-c` / `--clipboard` | Copy `gap receive {ticket}` (TTY: press `c` after the ticket). |
+| `-c` / `--clipboard` | Copy `pun receive {ticket}` (TTY: press `c` after the ticket). |
 
-Temp dirs: `./.gap-send-*` and `./.gap-recv-*`. Removed on graceful exit. Kill -9 leaves them; delete by hand.
+Temp dirs: `./.pun-send-*` and `./.pun-recv-*`. Removed on graceful exit. Kill -9 leaves them; delete by hand.
 
 Export names are `/`-split. Empty, `.`, `..`, NUL, `\`, and `/` in a component are rejected. Existing targets abort.
 

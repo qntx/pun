@@ -3,9 +3,9 @@ use std::str::FromStr;
 use anyhow::Context;
 use iroh::SecretKey;
 
-/// Load `GAP_SECRET` or generate a random iroh secret key.
+/// Load `PUN_SECRET` or generate a random iroh secret key.
 pub(crate) fn get_or_create_secret(print: bool) -> anyhow::Result<SecretKey> {
-    std::env::var("GAP_SECRET").map_or_else(
+    std::env::var("PUN_SECRET").map_or_else(
         |_| {
             let key = SecretKey::generate();
             if print {
@@ -13,6 +13,6 @@ pub(crate) fn get_or_create_secret(print: bool) -> anyhow::Result<SecretKey> {
             }
             Ok(key)
         },
-        |secret| SecretKey::from_str(&secret).context("invalid GAP_SECRET"),
+        |secret| SecretKey::from_str(&secret).context("invalid PUN_SECRET"),
     )
 }

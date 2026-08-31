@@ -1,5 +1,5 @@
 [package]
-name                   = "gap"
+name                   = "pun"
 version.workspace      = true
 edition.workspace      = true
 rust-version.workspace = true
@@ -11,7 +11,7 @@ keywords               = ["p2p", "network", "holepunching", "cli"]
 categories             = ["command-line-utilities", "network-programming"]
 
 [[bin]]
-name = "gap"
+name = "pun"
 path = "src/main.rs"
 
 [features]

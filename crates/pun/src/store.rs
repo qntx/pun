@@ -17,7 +17,7 @@ pub(crate) struct TempStore {
 impl TempStore {
     pub(crate) async fn create_send(cwd: &Path, source: &Path) -> Result<Self, AppError> {
         let suffix = rand::rng().random::<[u8; 16]>();
-        let dir = cwd.join(format!(".gap-send-{}", HEXLOWER.encode(&suffix)));
+        let dir = cwd.join(format!(".pun-send-{}", HEXLOWER.encode(&suffix)));
         if dir.exists() {
             return Err(AppError::Fail(anyhow::anyhow!(
                 "can not share twice from the same directory: {}",
@@ -36,7 +36,7 @@ impl TempStore {
     }
 
     pub(crate) async fn open_recv(cwd: &Path, hash: &Hash) -> Result<Self, AppError> {
-        let dir = cwd.join(format!(".gap-recv-{}", hash.to_hex()));
+        let dir = cwd.join(format!(".pun-recv-{}", hash.to_hex()));
         tokio::fs::create_dir_all(&dir)
             .await
             .context("create receive blob store directory")?;

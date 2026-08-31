@@ -1,4 +1,4 @@
-# cargo-deny configuration for the gap workspace.
+# cargo-deny configuration for the pun workspace.
 # Run: `cargo deny check` (also wired into CI / Justfile).
 
 [graph]

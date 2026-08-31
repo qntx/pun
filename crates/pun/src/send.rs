@@ -158,7 +158,7 @@ fn announce_ticket(provider: &Provider, args: &SendArgs) -> BlobTicket {
         );
     }
     println!("to get this data, use");
-    println!("gap receive {ticket}");
+    println!("pun receive {ticket}");
     ticket
 }
 
