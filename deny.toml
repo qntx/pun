@@ -11,7 +11,7 @@ feature-depth = 1
 ignore = [
     # unmaintained atomic-polyfill via heapless → postcard → iroh-blobs 0.103; no safe upgrade
     "RUSTSEC-2023-0089",
-    # unmaintained paste via netlink-packet-core → netwatch → iroh 1.0; no safe upgrade
+    # unmaintained paste via netlink-packet-core → netwatch → iroh; no safe upgrade
     "RUSTSEC-2024-0436",
     # unmaintained proc-macro-error via genawaiter → iroh-blobs 0.103; no safe upgrade
     "RUSTSEC-2024-0370",
