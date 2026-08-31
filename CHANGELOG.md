@@ -15,6 +15,11 @@ All notable changes to this workspace are documented in this file. The format is
 - Crate is crates.io-publishable (`publish = false` removed).
 - README: kobe-style badges, `sh.qntx.org/gap` install, compact usage. sendme attribution moved to `NOTICE`.
 - Direct dependencies upgraded to current crates.io (iroh `1.1.0`; clap `4.6.6`; tokio `1.53.1`; iroh-blobs remains `0.103.0`, latest).
+- CI caller no longer sets job-level `timeout-minutes` (invalid on `uses:`); pass `timeout-minutes: 60` as a reusable-workflow input.
+
+### Removed
+
+- `CONTRIBUTING.md`, `Makefile`.
 
 ## [0.1.0] - 2026-08-31
 
