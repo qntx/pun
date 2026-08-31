@@ -26,7 +26,7 @@ License: contributions are dual-licensed [MIT](LICENSE-MIT) OR
 
 | Tool | Role |
 | --- | --- |
-| Rust stable ≥ 1.91 | Build, test. Workspace MSRV is 1.91 (iroh 1.0). |
+| Rust stable ≥ 1.91 | Build, test. Workspace MSRV is 1.91 (iroh 1.1). |
 | Rust nightly | `rustfmt` import grouping; Clippy workspace lints. |
 | [`just`](https://github.com/casey/just) | Canonical task runner (`Justfile`). `Makefile` mirrors the same suite. |
 | [`cargo-deny`](https://github.com/EmbarkStudios/cargo-deny) | Licenses, bans, advisories, sources. |
