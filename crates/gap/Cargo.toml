@@ -9,7 +9,6 @@ readme                 = "../../README.md"
 description            = "P2P pipe — NAT hole punching and blake3-verified transfer"
 keywords               = ["p2p", "network", "holepunching", "cli"]
 categories             = ["command-line-utilities", "network-programming"]
-publish                = false
 
 [[bin]]
 name = "gap"

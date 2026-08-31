@@ -65,8 +65,10 @@ deny.toml                  licenses / bans / advisories / sources
 Justfile / Makefile        local gates (keep in sync with each other)
 .github/workflows/
   ci.yml                   lint, test, deny
+  release.yml              GitHub Release binaries (`bin`/`package` = `gap`)
+  publish.yml              crates.io (`packages: "gap"`)
 crates/
-  gap/                     unpublished std CLI binary
+  gap/                     std CLI binary
   README.md                crate table
 CONTRIBUTING.md            this file
 CHANGELOG.md               Keep a Changelog
