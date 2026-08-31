@@ -37,11 +37,13 @@ irm https://sh.qntx.org/gap/ps | iex
 
 Or with Cargo — `cargo install gap`.
 
+oh-my-zsh’s git plugin aliases `gap` to `git apply`. Then a bare `gap` waits on stdin, and `gap send FILE` becomes `git apply send FILE`. Use `command gap` or `\gap`, or `unalias gap`.
+
 ## Usage
 
 ```sh
-gap send ./photo.jpg
-gap recv <ticket>
+command gap send ./photo.jpg
+command gap recv <ticket>
 ```
 
 `recv` is an alias for `receive`. Clipboard copies `gap receive {ticket}`.
