@@ -1,5 +1,4 @@
 # justfile for Rust project using Cargo
-# Kept in sync with Makefile (same targets / same check suite).
 
 default: all
 

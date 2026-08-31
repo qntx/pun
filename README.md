@@ -1,4 +1,4 @@
-# gap
+# Gap
 
 [![Crates.io][crates-badge]][crates-url]
 [![Docs.rs][docs-badge]][docs-url]
@@ -41,7 +41,7 @@ Or with Cargo — `cargo install gap`.
 
 ```sh
 gap send ./photo.jpg
-gap receive <ticket>
+gap recv <ticket>
 ```
 
 `recv` is an alias for `receive`. Clipboard copies `gap receive {ticket}`.
@@ -63,10 +63,6 @@ gap send ./dir --relay disabled   # loopback / airgap
 Temp dirs: `./.gap-send-*` and `./.gap-recv-*`. Removed on graceful exit. Kill -9 leaves them; delete by hand.
 
 Export names are `/`-split. Empty, `.`, `..`, NUL, `\`, and `/` in a component are rejected. Existing targets abort.
-
-## Contributing
-
-See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
