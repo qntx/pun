@@ -1,0 +1,56 @@
+# cargo-deny configuration for the gap workspace.
+# Run: `cargo deny check` (also wired into CI / Justfile).
+
+[graph]
+all-features = true
+
+[output]
+feature-depth = 1
+
+[advisories]
+ignore = [
+    # unmaintained atomic-polyfill via heapless → postcard → iroh-blobs 0.103; no safe upgrade
+    "RUSTSEC-2023-0089",
+    # unmaintained paste via netlink-packet-core → netwatch → iroh 1.0; no safe upgrade
+    "RUSTSEC-2024-0436",
+    # unmaintained proc-macro-error via genawaiter → iroh-blobs 0.103; no safe upgrade
+    "RUSTSEC-2024-0370",
+]
+
+[licenses]
+confidence-threshold = 0.8
+allow                = [
+    "MIT",
+    "Apache-2.0",
+    "Apache-2.0 WITH LLVM-exception",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BSD-1-Clause",
+    "CC0-1.0",
+    "Unlicense",
+    "Zlib",
+    "MPL-2.0",
+    "Unicode-3.0",
+    "ISC",
+    "CDLA-Permissive-2.0",
+]
+
+[licenses.private]
+ignore = false
+
+[bans]
+multiple-versions          = "warn"
+wildcards                  = "deny"
+highlight                  = "all"
+workspace-default-features = "allow"
+external-default-features  = "allow"
+allow-workspace            = true
+
+deny = []
+skip = []
+
+[sources]
+unknown-registry = "deny"
+unknown-git      = "deny"
+allow-registry   = ["https://github.com/rust-lang/crates.io-index"]
+allow-git        = []
