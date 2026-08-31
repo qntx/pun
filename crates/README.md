@@ -2,7 +2,7 @@
 
 | Crate | Kind | Notes |
 | --- | --- | --- |
-| [`gap`](gap/) | bin / std | Unpublished CLI. `publish = false`. |
+| [`gap`](gap/) | bin / std | CLI. |
 
 ```text
 gap
