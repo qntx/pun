@@ -13,7 +13,7 @@ All notable changes to this workspace are documented in this file. The format is
 ### Changed
 
 - Crate is crates.io-publishable (`publish = false` removed).
-- README license footer matches QuantX layout. sendme attribution retained.
+- README: kobe-style badges, `sh.qntx.org/gap` install, compact usage. sendme attribution moved to `NOTICE`.
 - Direct dependencies upgraded to current crates.io (iroh `1.1.0`; clap `4.6.6`; tokio `1.53.1`; iroh-blobs remains `0.103.0`, latest).
 
 ## [0.1.0] - 2026-08-31

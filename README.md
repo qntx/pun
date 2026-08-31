@@ -1,56 +1,72 @@
 # gap
 
-P2P pipe in Rust. Punch through NAT and send files with blake3-verified streaming.
+[![Crates.io][crates-badge]][crates-url]
+[![Docs.rs][docs-badge]][docs-url]
+[![CI][ci-badge]][ci-url]
+[![License][license-badge]][license-url]
+[![Rust][rust-badge]][rust-url]
+
+[crates-badge]: https://img.shields.io/crates/v/gap.svg
+[crates-url]: https://crates.io/crates/gap
+[docs-badge]: https://img.shields.io/docsrs/gap.svg
+[docs-url]: https://docs.rs/gap
+[ci-badge]: https://github.com/qntx/gap/actions/workflows/ci.yml/badge.svg
+[ci-url]: https://github.com/qntx/gap/actions/workflows/ci.yml
+[license-badge]: https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg
+[license-url]: LICENSE-MIT
+[rust-badge]: https://img.shields.io/badge/rust-edition%202024-orange.svg
+[rust-url]: https://doc.rust-lang.org/edition-guide/
+
+**P2P pipe in Rust — punch NAT, send a path, receive by ticket. blake3-verified streaming.**
+
+`gap send` stands up an ephemeral iroh endpoint, imports a file or directory into a blob store, and prints a ticket. `gap receive` fetches that payload into the current directory. While the sender is running, the ticket is the capability: anyone who has it can fetch the blobs.
+
+## Install
+
+**macOS / Linux**
+
+```sh
+curl -fsSL https://sh.qntx.org/gap | sh
+```
+
+**Windows** (PowerShell)
+
+```powershell
+irm https://sh.qntx.org/gap/ps | iex
+```
+
+Or with Cargo — `cargo install gap`.
 
 ## Usage
 
-```text
-gap send <file or directory>
+```sh
+gap send ./photo.jpg
 gap receive <ticket>
 ```
 
-`recv` is an alias for `receive`.
+`recv` is an alias for `receive`. Clipboard copies `gap receive {ticket}`.
 
-This creates an ephemeral iroh endpoint, imports the path into a blake3 blob store, and prints a ticket. The receiver uses that ticket to fetch the data into the current directory.
+```sh
+gap send . --no-progress          # three-line stdout, no TTY chatter
+gap send ./dir -c                 # copy the receive command (OSC 52)
+gap send ./dir --relay disabled   # loopback / airgap
+```
 
-A ticket is capability-equivalent for the payload while the sender is running: anyone who has the ticket can fetch the blobs.
-
-### Environment
-
-| Variable | Effect |
+| | |
 | --- | --- |
-| `GAP_SECRET` | Optional hex iroh `SecretKey`. Generated randomly if unset. |
-| `RUST_LOG` | `tracing-subscriber` filter. `-v` / `-vv` are not tracing. |
+| `GAP_SECRET` | Optional hex node key. Random if unset. `--show-secret` prints it to stderr. |
+| `RUST_LOG` | Tracing. `-v` / `-vv` are stats, not log levels. |
+| `--relay` | `default` (n0), `disabled`, or a URL. |
+| `--no-progress` | Hide bars. Non-TTY send prints exactly three ASCII lines. |
+| `-c` / `--clipboard` | Copy `gap receive {ticket}` (TTY: press `c` after the ticket). |
 
-`--show-secret` prints the hex key to stderr. Do not log that value.
+Temp dirs: `./.gap-send-*` and `./.gap-recv-*`. Removed on graceful exit. Kill -9 leaves them; delete by hand.
 
-`-v` prints a generated `GAP_SECRET` (when the key was random) and extra receive stats. `-vv` also lists collection entries. Tracing stays `RUST_LOG` only.
+Export names are `/`-split. Empty, `.`, `..`, NUL, `\`, and `/` in a component are rejected. Existing targets abort.
 
-### Relays and progress
+## Contributing
 
-`--relay default|disabled|<URL>` (default: n0 relays via `presets::N0`). `--no-progress` hides progress bars.
-
-With `--no-progress`, default verbosity, and stdin not a TTY, `gap send` prints exactly three ASCII lines on stdout:
-
-```text
-imported file <path>, <bytes>, hash <hex>
-to get this data, use
-gap receive <ticket>
-```
-
-### Temp directories
-
-Send uses `./.gap-send-<32 hex chars>/`. Receive uses `./.gap-recv-<blake3 hex>/`. These are deleted on graceful shutdown. Kill -9 / abort panics skip `Drop`; delete leftover `.gap-*` directories by hand.
-
-### Export path validation
-
-Collection names are `/`-split. Each component is rejected if it is empty, `.`, `..`, or contains NUL, `\`, or `/`. This is stricter than sendme, which only rejected `/` and could follow `../` out of the current directory.
-
-Export aborts if the target already exists.
-
-### Clipboard
-
-Default feature `clipboard`. `-c` / `--clipboard` copies `gap receive {ticket}` via OSC 52. Press `c` after the ticket is printed (TTY only).
+See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## License
 
@@ -62,8 +78,6 @@ Licensed under either of:
 at your option.
 
 Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in this project shall be dual-licensed as above, without any additional terms or conditions.
-
-Portions adapted from [n0-computer/sendme](https://github.com/n0-computer/sendme) commit `8dda1e5383209e9027dd54430c77059ef51adc2e`. Copyright N0, INC. Licensed Apache-2.0 OR MIT.
 
 ---
 
