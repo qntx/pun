@@ -1,4 +1,4 @@
-//! CLI integration tests for `gap send` / `gap receive`.
+//! CLI integration tests for `pun send` / `pun receive`.
 #![allow(
     unused_crate_dependencies,
     reason = "integration tests share the package graph; only duct, tempfile, and iroh-blobs are used"
@@ -18,8 +18,8 @@ mod tests {
     const FILE_TEST_TIMEOUT: Duration = Duration::from_secs(60);
     const DIR_TEST_TIMEOUT: Duration = Duration::from_secs(120);
 
-    const fn gap_bin() -> &'static str {
-        env!("CARGO_BIN_EXE_gap")
+    const fn pun_bin() -> &'static str {
+        env!("CARGO_BIN_EXE_pun")
     }
 
     fn always_err(msg: &'static str) -> Result<(), &'static str> {
@@ -127,7 +127,16 @@ mod tests {
 
     fn ticket_from_send_stdout(output: &[u8]) -> BlobTicket {
         let text = String::from_utf8(output.to_vec()).expect("send stdout utf8");
-        let ticket = text
+        let last_line = text
+            .trim_end()
+            .lines()
+            .next_back()
+            .expect("send stdout has a last line");
+        assert!(
+            last_line.starts_with("pun receive "),
+            "third send stdout line must start with pun receive: {last_line:?}"
+        );
+        let ticket = last_line
             .split_ascii_whitespace()
             .next_back()
             .expect("ticket token on send stdout");
@@ -182,7 +191,7 @@ mod tests {
             std::fs::write(&src_file, &data).expect("write source file");
             let path = src_file.to_str().expect("src path utf8");
             let send = Arc::new(
-                duct::cmd(gap_bin(), send_args(path))
+                duct::cmd(pun_bin(), send_args(path))
                     .dir(src_dir.path())
                     .env_remove("RUST_LOG")
                     .reader()
@@ -195,7 +204,7 @@ mod tests {
             let send_out = read_ascii_lines(3, &mut &*send).expect("read send stdout");
             let ticket = ticket_from_send_stdout(&send_out);
             let recv = Arc::new(
-                duct::cmd(gap_bin(), recv_args(&ticket.to_string()))
+                duct::cmd(pun_bin(), recv_args(&ticket.to_string()))
                     .dir(tgt_dir.path())
                     .env_remove("RUST_LOG")
                     .start()
@@ -224,7 +233,7 @@ mod tests {
             std::fs::write(&src_file, &data).expect("write source file");
             let path = src_file.to_str().expect("src path utf8");
             let send = Arc::new(
-                duct::cmd(gap_bin(), send_args(path))
+                duct::cmd(pun_bin(), send_args(path))
                     .dir(src_dir.path())
                     .env_remove("RUST_LOG")
                     .reader()
@@ -237,7 +246,7 @@ mod tests {
             let send_out = read_ascii_lines(3, &mut &*send).expect("read send stdout");
             let ticket = ticket_from_send_stdout(&send_out);
             let recv = Arc::new(
-                duct::cmd(gap_bin(), recv_args(&ticket.to_string()))
+                duct::cmd(pun_bin(), recv_args(&ticket.to_string()))
                     .dir(tgt_dir.path())
                     .env("RUST_LOG", "iroh::socket=error")
                     .stdout_capture()
@@ -279,7 +288,7 @@ mod tests {
             write_src_tree(&src_data_dir);
             let path = src_data_dir.to_str().expect("src data path utf8");
             let send = Arc::new(
-                duct::cmd(gap_bin(), send_args(path))
+                duct::cmd(pun_bin(), send_args(path))
                     .dir(src_dir.path())
                     .env_remove("RUST_LOG")
                     .reader()
@@ -292,7 +301,7 @@ mod tests {
             let send_out = read_ascii_lines(3, &mut &*send).expect("read send stdout");
             let ticket = ticket_from_send_stdout(&send_out);
             let recv = Arc::new(
-                duct::cmd(gap_bin(), recv_args(&ticket.to_string()))
+                duct::cmd(pun_bin(), recv_args(&ticket.to_string()))
                     .dir(tgt_dir.path())
                     .env_remove("RUST_LOG")
                     .start()

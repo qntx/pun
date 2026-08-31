@@ -42,7 +42,7 @@ impl Drop for RawModeGuard {
 fn add_to_clipboard(ticket: &BlobTicket) {
     execute!(
         stdout(),
-        CopyToClipboard::to_clipboard_from(format!("gap receive {ticket}"))
+        CopyToClipboard::to_clipboard_from(format!("pun receive {ticket}"))
     )
     .unwrap_or_else(|err| eprintln!("Failed to copy to clipboard: {err}"));
 }

@@ -14,5 +14,5 @@ jobs:
     permissions:
       contents: write
     with:
-      bin: gap
-      package: gap
+      bin: pun
+      package: pun

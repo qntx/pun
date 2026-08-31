@@ -2,10 +2,10 @@
 
 | Crate | Kind | Notes |
 | --- | --- | --- |
-| [`gap`](gap/) | bin / std | CLI. |
+| [`pun`](pun/) | bin / std | CLI. |
 
 ```text
-gap
+pun
 ```
 
 No path dependency on other workspace crates.

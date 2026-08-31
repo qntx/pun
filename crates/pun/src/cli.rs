@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 
 /// Send a file or directory between two machines, using blake3 verified streaming.
 ///
-/// For all subcommands, you can specify a secret key using the `GAP_SECRET`
+/// For all subcommands, you can specify a secret key using the `PUN_SECRET`
 /// environment variable. If you don't, a random one will be generated.
 ///
 /// You can also specify a port for the magicsocket. If you don't, a random one

@@ -1,6 +1,6 @@
 [workspace]
 members         = ["crates/*"]
-default-members = ["crates/gap"]
+default-members = ["crates/pun"]
 resolver        = "3"
 
 [workspace.package]
@@ -8,7 +8,7 @@ version      = "0.1.0"
 edition      = "2024"
 rust-version = "1.91"
 license      = "MIT OR Apache-2.0"
-repository   = "https://github.com/qntx/gap"
+repository   = "https://github.com/qntx/pun"
 description  = "P2P pipe in Rust. Punch through NAT and send"
 keywords     = ["p2p", "network", "holepunching", "cli"]
 categories   = ["command-line-utilities", "network-programming"]
